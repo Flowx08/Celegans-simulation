@@ -10,6 +10,10 @@ I tested the program only on Linux , so here's the instructions to build the pro
 This does not mean that you can't compile the program on other platforms.
 
 You need to install SDL2 and OpenGL libraries.<br/>
+On ubuntu just run this:
+
+	$ sudo apt-get install libsdl2-dev
+
 Then clone the repository to your computer, go to the 'src' directory and run:<br/>
 
     $ sudo sh compile.sh
