@@ -11,19 +11,19 @@ This does not mean that you can't compile the program on other platforms.
 
 You need to install SDL2 and OpenGL libraries.<br/>
 On ubuntu just run this:
-
-	$ sudo apt-get install libsdl2-dev
-
+```bash
+  sudo apt-get install libsdl2-dev
+```
 On OSX run:
-  
-  $ brew install sdl2
-
+```bash
+  brew install sdl2
+```
 Then clone the repository to your computer, go to main directory and run:<br/>
-
-    $ sudo cmake .
-	  $ make
-    $ ./bin/main
-
+```bash
+  sudo cmake .
+  make
+  ./bin/main
+```
 To 'turn on' the worm, hold the F key for few seconds.<br/>
 
 You can control the simulation with the keyboard:<br/>
