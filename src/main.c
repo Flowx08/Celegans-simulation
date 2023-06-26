@@ -13,10 +13,10 @@
 ////////////////////////////////////////////////////////////
 ///	CONSTANTS
 ////////////////////////////////////////////////////////////
-#define WINDOW_WIDTH 1100
-#define WINDOW_HEIGHT 700
-#define BODY_WIDTH 64
-#define BODY_HEIGHT 32
+#define WINDOW_WIDTH 1100.0
+#define WINDOW_HEIGHT 700.0
+#define BODY_WIDTH 64.0
+#define BODY_HEIGHT 32.0
 #define RADIAS_TO_DEGREE 57.2957
 
 
@@ -50,18 +50,25 @@ void Celegans_free(Celegans* ce)
 
 void Celegans_update(Celegans* ce)
 {
-	ce->soul->neurons[MVULVA]->state = 0;
+  int mvulva_id = Celegans_neuron_get_id("MVULVA");
+  assert(mvulva_id != -1);
+  int muscle_right_start_id = MUSCLE_RIGHT_START;
+  int muscle_right_end_id = MUSCLE_RIGHT_END;
+  int muscle_left_start_id = MUSCLE_LEFT_START;
+  int muscle_left_end_id = MUSCLE_LEFT_END;
+
+	ce->soul->neurons[mvulva_id]->state = 0;
 	
 	//Calculate right side muscle contraction
 	int rightAcc = 0;
-	for (int i = MUSCLE_RIGHT_START; i < MUSCLE_RIGHT_END; i++) {
+	for (int i = muscle_right_start_id; i < muscle_right_end_id; i++) {
 		rightAcc += ce->soul->neurons[i]->state; 
 		ce->soul->neurons[i]->state *= 0.7; //Decrease the muscle contraction over time 
 	}
 
 	//Calculate left side muscle contraction
 	int leftAcc = 0;
-	for (int i = MUSCLE_LEFT_START; i < MUSCLE_LEFT_END; i++) {
+	for (int i = muscle_left_start_id; i < muscle_left_end_id; i++) {
 		leftAcc += ce->soul->neurons[i]->state;
 		ce->soul->neurons[i]->state *= 0.7; //Decrease the muscle contraction over time
 	}
@@ -121,6 +128,7 @@ int main()
 				VSVECTOR2(WINDOW_WIDTH/2, WINDOW_HEIGHT/2),
 				VSVECTOR2(WINDOW_WIDTH, WINDOW_HEIGHT), 0);
 	
+
 	//Application loop
 	for (;;)
 	{
@@ -155,8 +163,14 @@ int main()
 		//Draw brain and muscle data on the screen
 		if (drawbraindata)
 		{
+      int neuron_end = NEURON_END;
+      int muscle_right_start_id = MUSCLE_RIGHT_START;
+      int muscle_right_end_id = MUSCLE_RIGHT_END;
+      int muscle_left_start_id = MUSCLE_LEFT_START;
+      int muscle_left_end_id = MUSCLE_LEFT_END;
+
 			//Draw neurons activity
-			for (int i = 0; i < NEURON_END; i++) {
+			for (int i = 0; i < neuron_end; i++) {
 				int x = i % 32;
 				int y = i / 32.0;
 				if (Celegans_brain_fired(ce->soul, i)) 
@@ -164,16 +178,16 @@ int main()
 			}
 
 			//Draw right side muscle activity
-			for (int i = MUSCLE_RIGHT_START; i < MUSCLE_RIGHT_END; i++) {
-				int x = i - MUSCLE_RIGHT_START;
+			for (int i = muscle_right_start_id; i < muscle_right_end_id; i++) {
+				int x = i - muscle_right_start_id;
 				int y = 200;
 				if (ce->soul->neurons[i]->state > 0) vsRendererDrawRect(NULL, 0, 0, 0, 0, x * 8 + 1, y, 8, 8, VSCOLOR(255, 0, 0, (unsigned char)(ce->soul->neurons[i]->state * 8.2)));
 				else vsRendererDrawRect(NULL, 0, 0, 0, 0, x * 8 + 1, y, 8, 8, VSCOLOR(0, 0, 255, (unsigned char)(ce->soul->neurons[i]->state * -8.2))); 
 			}
 		
 			//Draw left side muscle activity
-			for (int i = MUSCLE_LEFT_START; i < MUSCLE_LEFT_END; i++) {
-				int x = i - MUSCLE_LEFT_START;
+			for (int i = muscle_left_start_id; i < muscle_left_end_id; i++) {
+				int x = i - muscle_left_start_id;
 				int y = 216;
 				if (ce->soul->neurons[i]->state > 0) vsRendererDrawRect(NULL, 0, 0, 0, 0, x * 8 + 1, y, 8, 8, VSCOLOR(255, 0, 0, (unsigned char)(ce->soul->neurons[i]->state * 8.2)));
 				else vsRendererDrawRect(NULL, 0, 0, 0, 0, x * 8 + 1, y, 8, 8, VSCOLOR(0, 0, 255, (unsigned char)(ce->soul->neurons[i]->state * -8.2)));

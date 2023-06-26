@@ -14,10 +14,15 @@ On ubuntu just run this:
 
 	$ sudo apt-get install libsdl2-dev
 
-Then clone the repository to your computer, go to the 'src' directory and run:<br/>
+On OSX run:
+  
+  $ brew install sdl2
 
-    $ sudo sh compile.sh
-	$ ./Celegans
+Then clone the repository to your computer, go to main directory and run:<br/>
+
+    $ sudo cmake .
+	  $ make
+    $ ./bin/main
 
 To 'turn on' the worm, hold the F key for few seconds.<br/>
 
